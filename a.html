@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<script>var g_timePoint = {base: Date.now()};</script>
+<meta charset="utf-8">
+<title>跨域名XMLHttpRequest缓存请求引起的同个资源请求被拒绝</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+<meta content="telephone=no" name="format-detection">
+<script>
+var xmlhttp;
+function loadXMLDoc(url)
+{
+xmlhttp=null;
+if (window.XMLHttpRequest)
+  {// code for all new browsers
+  xmlhttp=new XMLHttpRequest();
+  }
+else if (window.ActiveXObject)
+  {// code for IE5 and IE6
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+if (xmlhttp!=null)
+  {
+ 
+  xmlhttp.onreadystatechange=state_Change;
+  xmlhttp.open("GET",url);
+  xmlhttp.send(null);
+  }
+else
+  {
+  alert("Your browser does not support XMLHTTP.");
+  }
+}
+
+function state_Change()
+{
+if (xmlhttp.readyState==4)
+  {// 4 = "loaded"
+  if (xmlhttp.status==200)
+    {
+		alert('ok');
+	
+	// 200 = OK
+    // ...our code here...
+    }
+  else
+    {
+    alert("error");
+    }
+  }
+}
+
+</script>
+</head>
+<body>
+<div>
+<input id="godomain" type="bottom" value="切换域名" name="切换域名"></input>
+</div>
+<script>
+var godomain = document.getElementById('godomain');
+if(location.host === 'y.qq.com'){
+	godomain.onclick = function(){
+		window.location.href = 'http://kg.qq.com/activity/a.html';
+		//window.open('http://kg.qq.com/activity/a.html');
+	
+	}
+	loadXMLDoc('http://mat1.gtimg.com/magazine/images1/2015sd/0428ycsxm.jpg');
+}else{
+	godomain.onclick = function(){
+	
+		window.location.href = 'http://y.qq.com/kg/activity/a.html';
+	}
+	loadXMLDoc('http://mat1.gtimg.com/magazine/images1/2015sd/0428ycsxm.jpg');
+}
+</script>
+</body>
+</html>
